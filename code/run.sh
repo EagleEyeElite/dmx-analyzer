@@ -7,11 +7,11 @@ set -o pipefail
 
 readonly TARGET_HOST=pi@rpi.local
 readonly TARGET_DIR=/home/pi
-readonly SOURCE_BIN=./target/aarch64-unknown-linux-gnu/debug/main
+readonly SOURCE_BIN=./output/gpio
 
 cross_compile_and_sync() {
-    cargo build --bin main --package led-matrix-controller --config=CrossCompileConfig.toml --features="rpi-led-matrix"
-    rsync ${SOURCE_BIN} ${TARGET_HOST}:${TARGET_DIR}/
+    docker compose up --build
+    rsync -P ${SOURCE_BIN} ${TARGET_HOST}:${TARGET_DIR}/
 }
 
 case "${1-""}" in
@@ -19,9 +19,9 @@ case "${1-""}" in
     -d|--deploy)
         cross_compile_and_sync
         # copy resource files
-        rsync -a --relative ./src/objects/ ${TARGET_HOST}:${TARGET_DIR}/
+        rsync -aP --relative ./src/objects/ ${TARGET_HOST}:${TARGET_DIR}/
         # exec bin
-        ssh -t ${TARGET_HOST} sudo ${TARGET_DIR}/main
+        ssh -t ${TARGET_HOST} sudo ${TARGET_DIR}/gpio
         ;;
     # simulate on pc
     -s|--simulate)

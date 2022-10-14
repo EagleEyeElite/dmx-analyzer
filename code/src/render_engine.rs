@@ -123,7 +123,10 @@ impl Engine {
         }
 
         // Model space to world space
-        let model = Rotation3::from_axis_angle(&-Vector3::y_axis(), self.state.rotation);
+        let model = Rotation3::from_axis_angle(
+            &-Vector3::y_axis(),
+            self.state.rotation
+        );
 
         // World space to camera space
         let view = Isometry3::look_at_rh(

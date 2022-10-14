@@ -32,7 +32,7 @@ fn main() {
         "src/objects/video_ship.obj",
         "src/objects/teapot.obj"
     ];
-    let mut engine = Engine::new(&str[0], &mut display);
+    let mut engine = Engine::new(&str[1], &mut display);
     let mut last: Instant = Instant::now();
 
     'running: loop {

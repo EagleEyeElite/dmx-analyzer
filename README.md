@@ -59,3 +59,4 @@ Banner: https://torange.biz/photofxnew/207/HD/polygonal-red-metal-texture-led-20
 [Rust-installation-guide]: https://www.rust-lang.org/tools/install
 [Rust-cross-compile]: https://github.com/japaric/rust-cross/blob/master/README.md
 
+./configure --prefix=/home/hwloc --enable-static --disable-libxml2

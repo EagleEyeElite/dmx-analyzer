@@ -1,0 +1,17 @@
+# Example config to cross compile for the raspberry pi 4.
+# Use like this: cargo build --config CrossCompileConfig.toml
+# Configure the paths to use your ARM/Linux C cross-compiler toolchain.
+# Precompiled mac os example: https://thinkski.github.io/osx-arm-linux-toolchains/
+
+[target.aarch64-unknown-linux-gnu]
+# Specify linker of your ARM/Linux C cross-compiler.
+linker = "aarch64-linux-gnu-g++"
+rustflags = [ "-L", "/home/hwloc/lib" ]
+
+[env]
+CXX = { value = "aarch64-linux-gnu-g++", forced = true }
+AR = { value = "aarch64-linux-gnu-ar", forced = true }
+CC = { value = "aarch64-linux-gnu-gcc", forced = true }
+
+[build]
+target = "aarch64-unknown-linux-gnu"
