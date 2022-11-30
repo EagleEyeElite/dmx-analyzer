@@ -13,6 +13,12 @@ cascade = "1.0.0"
 embedded-graphics = "0.7.1"
 nalgebra = "0.31.1"
 wavefront_obj = "10.0.0"
+rppal =  { version = "0.13.1", optional = true}
+libc = { version = "0.2.135"}
+scheduler = { version = "0.1.3", optional = true}
+hwloc = { version = "0.5.0"}
+reqwest = "0.11"
+tokio = "1"
 
 [features]
 default = ["rpi-led-matrix"]
@@ -21,6 +27,11 @@ default = ["rpi-led-matrix"]
 name = "main"
 path = "src/main.rs"
 required-features = ["rpi-led-matrix"]
+
+[[bin]]
+name = "gpio"
+path = "src/gpio.rs"
+required-features = ["rppal", "scheduler"]
 
 # cargo run with --no-default-features flag
 [[bin]]

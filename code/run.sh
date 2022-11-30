@@ -19,7 +19,7 @@ case "${1-""}" in
     -d|--deploy)
         cross_compile_and_sync
         # copy resource files
-        rsync -a --relative ./src/objects/ ${TARGET_HOST}:${TARGET_DIR}/
+        rsync -aP --relative ./src/objects/ ${TARGET_HOST}:${TARGET_DIR}/
         # exec bin
         ssh -t ${TARGET_HOST} sudo ${TARGET_DIR}/main
         ;;

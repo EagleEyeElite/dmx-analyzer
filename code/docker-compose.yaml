@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  code:
+    build: .
+    container_name: compile
+    volumes:
+      - .:/code
+      - /code/target
