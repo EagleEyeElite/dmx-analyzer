@@ -29,7 +29,7 @@ required-features = ["rpi-led-matrix"]
 [[bin]]
 name = "gpio"
 path = "src/gpio.rs"
-required-features = ["rppal", "scheduler"]
+required-features = ["rppal"]
 
 # cargo run with --no-default-features flag
 [[bin]]

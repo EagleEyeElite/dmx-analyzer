@@ -5,9 +5,9 @@ set -o nounset
 set -o pipefail
 # set -o xtrace # for debugging
 
-readonly TARGET_HOST=pi@rpi.local
+readonly TARGET_HOST=pi@rpi
 readonly TARGET_DIR=/home/pi
-readonly SOURCE_BIN=./output/gpio
+readonly SOURCE_BIN=./target/aarch64-unknown-linux-gnu/debug/gpio
 
 cross_compile_and_sync() {
     docker compose up --build
@@ -32,6 +32,11 @@ case "${1-""}" in
         cross_compile_and_sync
         # start debug server
         ssh -t ${TARGET_HOST} sudo gdbserver :1234 ${TARGET_DIR}/main
+        ;;
+    -w|--wsl)
+        cargo build --bin gpio --package led-matrix-controller --config=WSLConfig.toml --features="rppal"
+        rsync -P ${SOURCE_BIN} ${TARGET_HOST}:${TARGET_DIR}/
+        ssh -t ${TARGET_HOST} sudo ${TARGET_DIR}/gpio
         ;;
     # commands to run on rpi
     *)

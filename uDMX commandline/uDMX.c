@@ -9,7 +9,7 @@
  */
 
 /*
-General Description:
+General Description:<w
 This program controls the PowerSwitch USB device from the command line.
 It must be linked with libusb, a library for accessing the USB bus from
 Linux, FreeBSD, Mac OS X and other Unix operating systems. Libusb can be
