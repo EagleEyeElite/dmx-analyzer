@@ -36,7 +36,14 @@ fn main() {
         "assets/objects/video_ship.obj",
         "assets/objects/teapot.obj"
     ];
-    let mut view = ViewController::new(str[1], &mut display);
+
+    let callback = || {
+        println!("hmm");
+        display.clear(Rgb888::new(0, 0, 0)).unwrap();
+        window.update(&dis);
+        //&windows.update(&display);
+    };
+    let mut view = ViewController::new(str[1], &mut display, callback);
     let mut last: Instant = Instant::now();
 
     let controller = DmxAnalyzer::new(false, false);
@@ -92,7 +99,8 @@ fn main() {
         let props = Views::Channel1Timing(ParameterDmxInfoScreen{});
         view.on_user_update(&mut display, props);
         last = now;
-        window.update(&display);
-        display.clear(Rgb888::new(0, 0, 0)).unwrap();
+
+        //window.update(&display);
+       // display.clear(Rgb888::new(0, 0, 0)).unwrap();
     }
 }

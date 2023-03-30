@@ -10,10 +10,11 @@ pub mod dmx_channels;
 pub mod render_engine;
 pub mod dmx_info_screen;
 
-pub struct ViewController {
+pub struct ViewController<CB> {
     dmx_channels: DmxChannels,
     render_engine: Engine,
-    dmx_info_screen: DmxInfoScreen
+    dmx_info_screen: DmxInfoScreen,
+    callback_update_screen: CB,
 }
 
 pub enum Views {
@@ -26,8 +27,10 @@ pub struct RenderEngineProps {
     pub(crate) parameter_dmx_channels: crate::dmx_analyzer::Parameter
 }
 
-impl ViewController {
-    pub fn new<D>(path: &str, display: &mut D) -> ViewController
+impl<CB> ViewController<CB>
+    where CB: FnMut()
+{
+    pub fn new<D>(path: &str, display: &mut D, test: CB) -> ViewController<CB>
         where
             D: DrawTarget<Color = Rgb888>,
             D::Error: Debug,
@@ -35,7 +38,7 @@ impl ViewController {
         let render_engine = Engine::new(path, display);
         let dmx_channels = DmxChannels {};
         let dmx_info_screen = DmxInfoScreen{};
-        return ViewController{render_engine, dmx_channels, dmx_info_screen };
+        return ViewController{render_engine, dmx_channels, dmx_info_screen, callback_update_screen: test };
     }
 
     pub fn on_user_update<D>(&mut self, display: &mut D, view: Views)
@@ -52,5 +55,6 @@ impl ViewController {
                 self.dmx_info_screen.on_user_update(display, parameter);
             }
         }
+        (self.callback_update_screen)();
     }
 }
