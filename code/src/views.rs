@@ -2,6 +2,7 @@ use std::fmt::Debug;
 
 use embedded_graphics::draw_target::DrawTarget;
 use embedded_graphics::pixelcolor::Rgb888;
+use embedded_graphics_simulator::SimulatorDisplay;
 use strum_macros::EnumCount;
 
 use render_engine::Engine;
